@@ -1,0 +1,16 @@
+app_url: http://s-cxp.cengage.com/itemservice/sample/start.jsp
+
+users:
+  username: Prashant Shukla
+  password: Prashant Shukla
+
+#Following details are necessary for capturing screenshots
+screenshot:
+  takeScreenshot: yes
+  dirpath: "target/Screenshot"  
+  ftpUpload:
+    uploadImage: no
+    url: localhost
+    userid: ftp_user_id
+    password: ftp_user_password
+  

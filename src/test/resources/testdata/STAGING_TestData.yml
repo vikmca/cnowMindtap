@@ -1,0 +1,12 @@
+app_url: https://s-c-login.cengage.com/cb/login.htm
+
+
+admin_Credential:
+        user_name: Anmol.sahi@mtq.com
+        password: anMOL@2011
+
+email:
+    send: yes
+    recepients: 
+      recepient1: shwetasingh@qainfotech.net
+      

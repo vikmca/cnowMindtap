@@ -1,0 +1,60 @@
+<html>
+    <head>
+        <title>Galen Page Dump</title>
+        <link rel="stylesheet" type="text/css" href="galen-pagedump.css"></link>
+        <script src="jquery-1.11.2.min.js"></script>
+        <script src="galen-pagedump.js"></script>
+        <script>
+var pageData = {"pageName":"canvasTag","title":"CXP Item Service > Test Page","items":{"btn_submitButtonAtBottom":{"area":[11,973,57,21],"text":"Submit","hasImage":true},"btn_FullExplanation":{"area":[623,368,127,32],"text":"Hide Explanation","hasImage":true},"btn_ReturnToGraph":{"area":[506,756,150,37],"text":"Return To Graph","hasImage":true},"slideBarForSelectModes":{"area":[757,276,60,190],"text":"Graph\nSee Graph built step by step\nBuild Graph Yourself","hasImage":true},"hoverOncontainer":{"area":[11,70,812,876],"text":"Now YOU Build it!\nSuppose that a small island nation devotes all of its resources to building tourist resorts or developing its infrastructure. Draw a production possibilities frontier that displays increasing opportunity costs and shows the tradeoff that the nation faces when building resorts and roads. Shade the area of your graph that represents all possible combinations that you could produce.\nDraw and label the following three points on your graph:\nPoint A) An efficient use of national resources.\nPoint B) An inefficient use of national resources.\nPoint C) A combination cannot be produced.\nShow Correct Graph\nX\nYour Graph\nCorrect Graph\nHide Explanation\nTry Again Return To Graph\nGraph\nSee Graph built step by step\nBuild Graph Yourself","hasImage":true},"btn_tryAgain":{"area":[175,756,103,37],"text":"Try Again","hasImage":true},"header_showCorrectGraph":{"area":[55,311,700,49],"text":"Show Correct Graph","hasImage":true},"img_ViewStudentGraph":{"area":[60,439,340,270],"text":"","hasImage":true}}};
+        </script>
+    </head>
+
+    <body>
+        <script>
+            $(function () {
+                initGalenPageDump(pageData);
+            });
+        </script>
+        <h1>canvasTag - Galen page dump</h1>
+        <div class="image">
+            <div class="canvas">
+            </div>
+            <img src="page.png">
+            <div class="bottombarstub"></div>
+        </div>
+        <div id="sidebar">
+            <div class="wrapper">
+                <div id="object-list">
+                    <h2>All objects:</h2>
+                    <ul>
+                    </ul>
+                </div>
+                <div id="object-details" style="display: none;">
+                    <h2>Details</h2>
+                    <span class="field-name">Name:</span>
+                    <span class="field-value xf-object-name"></span>
+
+                    <span class="field-name">Area:</span>
+                    <span class="field-value xf-object-area"></span>
+
+                    <span class="field-name">Text:</span>
+                    <span class="field-value xf-object-text"></span>
+                    
+                    <span class="field-name">Image:</span>
+                    <div class="image"></div>
+
+                </div>
+                <div class="bottombarstub"></div>
+            </div>
+        </div>
+        <div id="bottombar">
+            <div class="wrapper">
+                <div id="object-suggestions" style="display: none;">
+                    <h2>Spec Suggestions</h2>
+                    <div class="spec-list">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,60 @@
+<html>
+    <head>
+        <title>Galen Page Dump</title>
+        <link rel="stylesheet" type="text/css" href="galen-pagedump.css"></link>
+        <script src="jquery-1.10.2.min.js"></script>
+        <script src="galen-pagedump.js"></script>
+        <script>
+var pageData = {"pageName":"CXPWorkFrame","title":"","items":{"cxp-work-subit":{"area":[110,1088,118,24],"text":"Check My Work","hasImage":true},"content-frame":{"area":[11,28,1278,530],"text":"","hasImage":true},"cxp-work-submit":{"area":[110,1088,118,24],"text":"Check My Work","hasImage":true},"q4-feedback-response":{"area":[45,629,1270,16],"text":"Partially correct","hasImage":true},"submit-q4-work":{"area":[110,680,118,24],"text":"Check My Work","hasImage":true},"q4-work-frame":{"area":[11,28,1278,530],"text":"","hasImage":true},"q4-feedback-header":{"area":[31,571,1294,30],"text":"Feedback","hasImage":true}}};
+        </script>
+    </head>
+
+    <body>
+        <script>
+            $(function () {
+                initGalenPageDump(pageData);
+            });
+        </script>
+        <h1>CXPWorkFrame - Galen page dump</h1>
+        <div class="image">
+            <div class="canvas">
+            </div>
+            <img src="page.png">
+            <div class="bottombarstub"></div>
+        </div>
+        <div id="sidebar">
+            <div class="wrapper">
+                <div id="object-list">
+                    <h2>All objects:</h2>
+                    <ul>
+                    </ul>
+                </div>
+                <div id="object-details" style="display: none;">
+                    <h2>Details</h2>
+                    <span class="field-name">Name:</span>
+                    <span class="field-value xf-object-name"></span>
+
+                    <span class="field-name">Area:</span>
+                    <span class="field-value xf-object-area"></span>
+
+                    <span class="field-name">Text:</span>
+                    <span class="field-value xf-object-text"></span>
+                    
+                    <span class="field-name">Image:</span>
+                    <div class="image"></div>
+
+                </div>
+                <div class="bottombarstub"></div>
+            </div>
+        </div>
+        <div id="bottombar">
+            <div class="wrapper">
+                <div id="object-suggestions" style="display: none;">
+                    <h2>Spec Suggestions</h2>
+                    <div class="spec-list">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

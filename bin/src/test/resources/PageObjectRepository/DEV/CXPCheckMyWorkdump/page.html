@@ -1,0 +1,60 @@
+<html>
+    <head>
+        <title>Galen Page Dump</title>
+        <link rel="stylesheet" type="text/css" href="galen-pagedump.css"></link>
+        <script src="jquery-1.10.2.min.js"></script>
+        <script src="galen-pagedump.js"></script>
+        <script>
+var pageData = {"pageName":"CXPCheckMyWork","title":"","items":{"title":{"area":[0,0,1366,20],"text":"Activity Service Test Page","hasImage":true},"show-api-info_button":{"area":[1025,20,124,31],"text":"Show API Info","hasImage":true},"completed_button":{"area":[696,20,97,31],"text":"Completed","hasImage":true},"show-scores_button":{"area":[501,20,116,31],"text":"Show Scores","hasImage":true},"review_button":{"area":[622,20,69,31],"text":"Review","hasImage":true},"new-test_button":{"area":[1154,20,84,31],"text":"New Test","hasImage":true},"completed-final-grading_button":{"area":[798,20,222,31],"text":"Completed (Final Grading)","hasImage":true},"activity-content-frame":{"area":[8,120,1352,519],"text":"","hasImage":true},"title-bar":{"area":[0,20,1366,100],"text":"Show Scores Review Completed Completed (Final Grading) Show API Info New Test destroy view specific node\nTaking assignment","hasImage":true}}};
+        </script>
+    </head>
+
+    <body>
+        <script>
+            $(function () {
+                initGalenPageDump(pageData);
+            });
+        </script>
+        <h1>CXPCheckMyWork - Galen page dump</h1>
+        <div class="image">
+            <div class="canvas">
+            </div>
+            <img src="page.png">
+            <div class="bottombarstub"></div>
+        </div>
+        <div id="sidebar">
+            <div class="wrapper">
+                <div id="object-list">
+                    <h2>All objects:</h2>
+                    <ul>
+                    </ul>
+                </div>
+                <div id="object-details" style="display: none;">
+                    <h2>Details</h2>
+                    <span class="field-name">Name:</span>
+                    <span class="field-value xf-object-name"></span>
+
+                    <span class="field-name">Area:</span>
+                    <span class="field-value xf-object-area"></span>
+
+                    <span class="field-name">Text:</span>
+                    <span class="field-value xf-object-text"></span>
+                    
+                    <span class="field-name">Image:</span>
+                    <div class="image"></div>
+
+                </div>
+                <div class="bottombarstub"></div>
+            </div>
+        </div>
+        <div id="bottombar">
+            <div class="wrapper">
+                <div id="object-suggestions" style="display: none;">
+                    <h2>Spec Suggestions</h2>
+                    <div class="spec-list">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

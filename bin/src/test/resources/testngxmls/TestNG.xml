@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite  verbose="0" name="Automation Suite" preserve-order="true" thread-count="1">
+
+	 <test name="Graph Builder Smoke Test" >
+		<classes>
+			<class name="com.qait.demo.tests.GB_SmokeTest"></class>
+		</classes>
+	</test>
+	<test name="Graph Builder canvas Test" >
+		<classes>
+			<class name =""></class>
+			<class name="com.qait.demo.tests.GB_GraphTabSmokeTest"></class>
+		</classes>
+	</test>
+</suite>

@@ -1,0 +1,27 @@
+app_url: https://s-c-login.cengage.com/cb/login.htm
+
+page_Title1: CengageBrain - My Home
+
+page_Title2: CengageBrain - Course Payment
+
+page_Title3: Assignments | Overview
+
+course_Name: MHCF25T
+
+chapter_Num: Chapter-1
+
+action: Resume
+
+action2: Retake
+
+user_name: Anmol.sahi@mtq.com
+password: anMOL@2011
+
+
+email:
+    send: yes
+    recepients: 
+      recepient1: shwetasingh@qainfotech.net
+      
+
+

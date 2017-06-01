@@ -1,0 +1,63 @@
+<item handler="FITB">
+  <value name="specification">
+    <field type="graphbuilder">
+      <title>
+        <label>Figure 2 </label>
+        The Production Possibilities Frontier</title>
+      <setup-step>
+        <add-narrative>
+          The production possibilities frontier shows the combinations of output—in this case, cars and computers—that the economy can possibly produce. The economy can produce any combination on or inside the frontier. Points outside the frontier are not feasible given the economy’s resources. The slope of the production possibilities frontier measures the opportunity cost of a car in terms of computers. This opportunity cost varies, depending on how much of the two goods the economy is producing.
+        </add-narrative>
+        <image-uri>books/butz_test/76545_ch02_f02_if_dig.jpg</image-uri>
+      </setup-step>
+      <demonstration-steps>
+        <step>
+          <replace-narrative>The production possibilities frontier shows the combinations of output—in this case, cars and computers—that the economy can possibly produce.</replace-narrative>
+          <image-uri>books/butz_test/76545_ch02_f02_ia_dig.jpg</image-uri>
+        </step>
+        <step>
+          <add-narrative>The economy can produce any combination on the frontier </add-narrative>
+          <image-uri>books/butz_test/76545_ch02_f02_ib_dig.jpg</image-uri>
+        </step>
+        <step>
+          <add-narrative>or inside it.</add-narrative>
+          <image-uri>books/butz_test/76545_ch02_f02_ic_dig.jpg</image-uri>
+        </step>
+        <step>
+          <add-narrative>Points outside the frontier are not feasible given the economy’s resources. </add-narrative>
+          <image-uri>books/butz_test/76545_ch02_f02_id_dig.jpg</image-uri>
+        </step>
+        <step>
+          <add-narrative>The slope of the production possibilities frontier measures the opportunity cost of a car in terms of computers. For example, moving from point A to point B produces 100 more cars at a cost of 200 computers. </add-narrative>
+          <image-uri>books/butz_test/76545_ch02_f02_ie_dig.jpg</image-uri>
+        </step>
+        <step>
+          <add-narrative>This opportunity cost varies, depending on how much of the two goods the economy is producing. In this case, moving from point B to point E costs more computers per car produced than moving from point A to point B.</add-narrative>
+          <image-uri>books/butz_test/76545_ch02_f02_if_dig.jpg</image-uri>
+        </step>
+      </demonstration-steps>
+      <question-step>
+        <ask>
+          <replace-narrative>Suppose that a small island nation devotes all of its resources to building tourist resorts or developing its infrastructure. Draw a production possibilities frontier that displays increasing opportunity costs and shows the tradeoff that the nation faces when building resorts and roads. Shade the area of your graph that represents all possible combinations that you could produce.<br/>
+            Draw and label the following three points on your graph:<br/>
+            Point A) An efficient use of national resources.<br/>
+            Point B) An inefficient use of national resources.<br/>
+            Point C) A combination cannot be produced.<br/>
+          </replace-narrative>
+        </ask>
+        <solve>
+          <image-uri>books/butz_test/76545_ch02_f02_sa_dig.jpg</image-uri>
+        </solve>
+        <explain>
+          <image-uri>books/butz_test/76545_ch02_f02_sb_dig.jpg</image-uri>
+        </explain>
+      </question-step>
+    </field>
+  </value>
+  <value name="specification-config">
+    <config id="1">
+      <correct method="json">[{"correct":true,"$exact":"true"}]</correct>
+    </config>
+    
+  </value>
+</item>
