@@ -21,13 +21,9 @@ import com.qait.automation.getpageobjects.GetPage;
  * @author qainfotech
  *
  */
-/**
- * @author qainfotech
- *
- */
-public class ComanAction extends GetPage {
+public class CommonAction extends GetPage {
 
-	public ComanAction(WebDriver driver, String pageName) {
+	public CommonAction(WebDriver driver, String pageName) {
 		super(driver, pageName);
 	}
 

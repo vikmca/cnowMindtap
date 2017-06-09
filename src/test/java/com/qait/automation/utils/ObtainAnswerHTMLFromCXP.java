@@ -1,7 +1,5 @@
 package com.qait.automation.utils;
 
-
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -57,7 +55,8 @@ import org.testng.Reporter;
 import com.google.common.io.Files;
 
 public class ObtainAnswerHTMLFromCXP {
-	public static String getAnswerHTMLFromCXP(String xml,String seed) throws ClientProtocolException, IOException {
+	public static String getAnswerHTMLFromCXP(String question, String xml, String seed)
+			throws ClientProtocolException, IOException {
 		String downloadLink = "http://dev-trunk-cxp.cengage.info/itemservice/sample/start.jsp";
 		HttpGet httpget = new HttpGet(downloadLink);
 		HttpPost httpPost = new HttpPost(downloadLink);
@@ -121,9 +120,9 @@ public class ObtainAnswerHTMLFromCXP {
 		urlParameters.add(new BasicNameValuePair("pluginURL", ""));
 		urlParameters.add(new BasicNameValuePair("locale", ""));
 		xml = StringUtils.replace(xml, "\"", "'");
-//		System.out.println("^^^^^^^^^^^^^^^^^^^" + xml);
+		// System.out.println("^^^^^^^^^^^^^^^^^^^" + xml);
 		urlParameters.add(new BasicNameValuePair("items", xml));
-		urlParameters.add(new BasicNameValuePair("version", "default"));
+		urlParameters.add(new BasicNameValuePair("version", "2"));
 		urlParameters.add(new BasicNameValuePair("itemsFileUrl", ""));
 
 		urlParameters.add(new BasicNameValuePair("pullItemXml", "xml"));
@@ -143,13 +142,14 @@ public class ObtainAnswerHTMLFromCXP {
 
 		postResponse = httpclient.execute(httpPost, context);
 		String respones = StringUtils.substringBetween(postResponse.toString(), "HttpResponseProxy", "[Date");
-//		System.out.println("(((((((((((((((((" + respones);
+		// System.out.println("(((((((((((((((((" + respones);
 		String takeId = StringUtils.substringBetween(postResponse.toString(), "Location:", ", Content");
 		String sample = "http://dev-trunk-cxp.cengage.info/itemservice/sample/";
 		takeId = StringUtils.deleteWhitespace(takeId);
-//		System.out.println("#########################################" + takeId);
+		// System.out.println("#########################################" +
+		// takeId);
 		httpget = new HttpGet(sample + takeId);
-//		System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" + httpget);
+		// System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" + httpget);
 		postResponse = httpclient.execute(httpget);
 
 		BufferedReader rd = new BufferedReader(new InputStreamReader(postResponse.getEntity().getContent()));
@@ -160,32 +160,37 @@ public class ObtainAnswerHTMLFromCXP {
 		}
 
 		Document doc = Jsoup.parse(result.toString());
-
-//		System.out.println("Answer HTML from Geyser: " + doc);
-
 		String grade = doc.getElementsByClass("ci-grade").get(0).attr("value");
-
-		System.out.println("**************Grading Information: " + grade);
+		//
+		// System.out.println("**************Grading Information: " +
+		// grade);
 		String index = "";
-		index = StringUtils.substringBetween(grade, "user-raw-answer\":[\"c=", "&");
-//		System.out.println("--------index----------" + index);
+		// index = StringUtils.substringBetween(grade,
+		// "user-raw-answer\":[\"c=", "&");
+		index = StringUtils.substringBetween(grade, "correct-answer\":[\"", "\"]");
+		// System.out.println("--------index----------" + index);
 		index = StringUtils.remove(index, "]").trim();
 		index = StringUtils.remove(index, "\"").trim();
-//		System.out.println("index: " + index);
+		// System.out.println("index: " + index);
 		if (index.contains("post-submission-feedback")) {
 			index = StringUtils.substringBefore(index, ",");
 		}
-//		try {
-//		    java.nio.file.Files.write(Paths.get("myfile.txt"), "the text".getBytes(), StandardOpenOption.APPEND);
-//		}catch (IOException e) {
-//		    //exception handling left as an exercise for the reader
-//		}
-		String answer = index;
-		System.out.println("Answer from CXP: " + answer);
-		return answer;
-//		System.out.println(
-//				"*********************************Process Completed**********************************************************");
 
+		String answer = index;
+		if (answer.length() == 1)
+			answer = answer.concat(".");
+		System.out.println("Answer from CXP: " + answer);
+		if (question.contains("TF")) {
+			// System.out.println("Answer HTML from Geyser: " + doc);
+
+			return answer;
+		} else if (question.contains("MC")) {
+			String answerText = doc.select("span:containsOwn(" + answer + ")").first().nextSibling().toString();
+			answerText = StringUtils.substringBetween(answerText, ">", "<");
+			System.out.println("Answer to MCQ from CXP: " + answerText);
+			return answerText;
+		} else
+			return "";
 	}
 
 }

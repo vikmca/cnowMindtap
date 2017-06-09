@@ -21,8 +21,6 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Reporter;
 
 import com.qait.automation.utils.CustomFunctions;
-
-import com.qait.demo.keywords.CnowLoginPageActions;
 import com.qait.demo.keywords.CnowSelectCoursePageActions;
 import com.qait.demo.keywords.LoginAction;
 
@@ -48,7 +46,6 @@ public class TestSessionInitiator {
 	 */
 
 	public LoginAction login;
-	public CnowLoginPageActions cnowLogin;
 	public CnowSelectCoursePageActions cnowSelectCourseAction;
 
 	public WebDriver getDriver() {
@@ -57,7 +54,6 @@ public class TestSessionInitiator {
 
 	private void _initPage() {
 		login = new LoginAction(driver);
-		cnowLogin = new CnowLoginPageActions(driver);
 		// custom function init
 		customFunctions = new CustomFunctions(driver);
 		cnowSelectCourseAction = new CnowSelectCoursePageActions(driver);

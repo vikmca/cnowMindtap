@@ -51,7 +51,7 @@ public class CourseAttempt {
 
 	}
 
-//	@Test
+	@Test
 	public void Step04_BlankSubmitQuestions() {
 		test.cnowSelectCourseAction.attemptAllQuestionsInChapter();
 		test.cnowSelectCourseAction.clickSubmitAssignmentForGradingBtn();
@@ -68,7 +68,7 @@ public class CourseAttempt {
 
 	@Test
 	public void Step05_CorrectSubmitQuestions() throws ClientProtocolException, IOException {
-		test.cnowSelectCourseAction.attemptQuestionsCorrectly();
+		test.cnowSelectCourseAction.attemptQuestionsCorrectly(getData("product_code"));
 		test.cnowSelectCourseAction.clickSubmitAssignmentForGradingBtn();
 		test.cnowSelectCourseAction.verifyWarningPopup();
 		test.cnowSelectCourseAction.selectSubmitForGradingBtnOnPopup();
@@ -82,9 +82,9 @@ public class CourseAttempt {
 		
 	}
 
-//	@Test
+	@Test
 	public void Step06_IncorrectSubmitQuestions() throws ClientProtocolException, IOException {
-		test.cnowSelectCourseAction.attemptQuestionsIncorrectly();
+		test.cnowSelectCourseAction.attemptQuestionsIncorrectly(getData("product_code"));
 		test.cnowSelectCourseAction.clickSubmitAssignmentForGradingBtn();
 		test.cnowSelectCourseAction.verifyWarningPopup();
 		test.cnowSelectCourseAction.selectSubmitForGradingBtnOnPopup();

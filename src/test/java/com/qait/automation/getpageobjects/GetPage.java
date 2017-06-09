@@ -10,8 +10,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
-
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
@@ -36,11 +34,12 @@ public class GetPage extends BaseUi {
 
 	}
 
-	public void scrollIntoView(WebElement element){
-		  ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", element);
-		  wait.waitForElementToBeVisible(element);
-//		  element.click();
+	public void scrollIntoView(WebElement element) {
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
+		// wait.waitForElementToBeVisible(element);
+		// element.click();
 	}
+
 	public void testStepName(String testStepName) {
 		layouttest.testStepName(testStepName);
 	}
@@ -52,10 +51,10 @@ public class GetPage extends BaseUi {
 		Reporter.log(" ", true);
 	}
 
-	public void testPageLayout(List<String> tagsToBeTested){
+	public void testPageLayout(List<String> tagsToBeTested) {
 		layouttest.checklayout(tagsToBeTested);
 	}
-	
+
 	protected boolean isElementNotDisplayedInDom(String elementName) {
 		boolean result;
 		try {
@@ -65,14 +64,29 @@ public class GetPage extends BaseUi {
 		} catch (NoSuchElementException excp) {
 			result = true;
 		}
-	// assertTrue(result, "ASSERTION Failed: element '" + elementName
-	// + "' is displayed.");
-	wait.resetImplicitTimeout(wait.getTimeOut());
-	logMessage("ASSERTION Passed: element " + elementName + " is not displayed as expected!!!");
-	return result;
-}
+		// assertTrue(result, "ASSERTION Failed: element '" + elementName
+		// + "' is displayed.");
+		wait.resetImplicitTimeout(wait.getTimeOut());
+		logMessage("ASSERTION Passed: element " + elementName + " is not displayed as expected!!!");
+		return result;
+	}
 
-	
+	protected boolean isElementNotDisplayedInDom(String elementName, String replacement1) {
+		boolean result;
+		try {
+			wait.resetImplicitTimeout(2);
+			driver.findElement(getLocator(elementName, replacement1));
+			result = false;
+		} catch (NoSuchElementException excp) {
+			result = true;
+		}
+		// assertTrue(result, "ASSERTION Failed: element '" + elementName
+		// + "' is displayed.");
+		wait.resetImplicitTimeout(wait.getTimeOut());
+		logMessage("ASSERTION Passed: element " + elementName + " is not displayed as expected!!!");
+		return result;
+	}
+
 	protected boolean isElementNotDisplayed(String elementName) {
 		boolean result;
 		try {
@@ -86,13 +100,13 @@ public class GetPage extends BaseUi {
 		return result;
 	}
 
-	public void testPageLayout(String tagToBeTested){
+	public void testPageLayout(String tagToBeTested) {
 		wait.hardWait(1);
 		scrollTop();
 		testPageLayout(Arrays.asList(tagToBeTested));
 	}
 
-	public void testPageLayout(){
+	public void testPageLayout() {
 		testPageLayout(Arrays.asList(getProperty("browser")));
 	}
 
@@ -102,8 +116,7 @@ public class GetPage extends BaseUi {
 		switchToDefaultContent();
 		String[] frameIdentifiers = frameNames.split(":");
 		for (String frameId : frameIdentifiers) {
-			wait.waitForFrameToBeAvailableAndSwitchToIt(getLocator(frameId
-					.trim()));
+			wait.waitForFrameToBeAvailableAndSwitchToIt(getLocator(frameId.trim()));
 		}
 	}
 
@@ -116,21 +129,50 @@ public class GetPage extends BaseUi {
 			throws NoSuchElementException {
 		WebElement elem = null;
 		try {
-			elem = wait.waitForElementToBeVisible(driver
-					.findElement(getLocator(elementToken, replacement1, replacement2)));
+			elem = wait.waitForElementToBeVisible(
+					driver.findElement(getLocator(elementToken, replacement1, replacement2)));
 
 		} catch (NoSuchElementException excp) {
-			fail("FAILED: Element "+ elementToken + " with the Locator "+getLocator(elementToken, replacement1, replacement2)+" not found on the " + this.pageName + " !!!");
+			fail("FAILED: Element " + elementToken + " with the Locator "
+					+ getLocator(elementToken, replacement1, replacement2) + " not found on the " + this.pageName
+					+ " !!!");
 		}
 		return elem;
 	}
-	
-	protected WebElement elementWithOuthighlight(String elementToken, String replacement) throws NoSuchElementException {
+
+	protected WebElement elementInDom(String elementToken) {
+		WebElement elem = null;
+		try {
+			elem = wait.waitForElementToBePresent(getLocator(elementToken));
+		} catch (Exception e) {
+			fail("FAILED: Element " + elementToken + " with the Locator " + getLocator(elementToken)
+					+ " not found on the " + this.pageName + " !!!");
+		}
+		return elem;
+	}
+
+	protected WebElement elementInDom(String elementToken, String replacement1, String replacement2) {
+		WebElement elem = null;
+		try {
+			// elem = wait.waitForElementToBePresent(getLocator(elementToken,
+			// replacement1, replacement2));
+			elem = driver.findElement(getLocator(elementToken, replacement1, replacement2));
+		} catch (Exception e) {
+			fail("FAILED: Element " + elementToken + " with the Locator "
+					+ getLocator(elementToken, replacement1, replacement2) + " not found on the " + this.pageName
+					+ " !!!");
+		}
+		return elem;
+	}
+
+	protected WebElement elementWithOuthighlight(String elementToken, String replacement)
+			throws NoSuchElementException {
 		WebElement elem = null;
 		try {
 			elem = wait.waitForElementToBeVisible(driver.findElement(getLocator(elementToken, replacement)));
 		} catch (NoSuchElementException excp) {
-			fail("FAILED: Element "+ elementToken + " with the Locator "+getLocator(elementToken, replacement)+"  not found on the " + this.pageName + " !!!");
+			fail("FAILED: Element " + elementToken + " with the Locator " + getLocator(elementToken, replacement)
+					+ "  not found on the " + this.pageName + " !!!");
 		}
 		return elem;
 	}
@@ -141,7 +183,8 @@ public class GetPage extends BaseUi {
 			elem = wait.waitForElementToBeVisible(driver.findElement(getLocator(elementToken, replacement)));
 			highlight(driver.findElement(getLocator(elementToken, replacement)));
 		} catch (NoSuchElementException excp) {
-			fail("FAILED: Element "+ elementToken + " with the Locator "+getLocator(elementToken, replacement)+"  not found on the " + this.pageName + " !!!");
+			fail("FAILED: Element " + elementToken + " with the Locator " + getLocator(elementToken, replacement)
+					+ "  not found on the " + this.pageName + " !!!");
 		}
 		return elem;
 	}
@@ -149,14 +192,14 @@ public class GetPage extends BaseUi {
 	protected WebElement elementSimple(String elementToken) {
 		WebElement elem = null;
 		try {
-			elem	=	driver.findElement(getLocator(elementToken));
+			elem = driver.findElement(getLocator(elementToken));
 			highlight(driver.findElement(getLocator(elementToken)));
 		} catch (NoSuchElementException excp) {
 
 		}
 		return elem;
 	}
-	
+
 	protected List<WebElement> elementsWithWait(String elementToken, String replacement) {
 		return driver.findElements(getLocator(elementToken, replacement));
 	}
@@ -164,7 +207,7 @@ public class GetPage extends BaseUi {
 	protected List<WebElement> elements(String elementToken, String replacement) {
 		return wait.waitForElementsToBeVisible(driver.findElements(getLocator(elementToken, replacement)));
 	}
-	
+
 	protected List<WebElement> elementsWithOutWait(String elementToken, String replacement) {
 		return driver.findElements(getLocator(elementToken, replacement));
 	}
@@ -184,45 +227,44 @@ public class GetPage extends BaseUi {
 		logMessage("String compare Assertion passed.");
 	}
 
-	protected boolean isElementDisplayed(String elementName,String elementTextReplace) {
+	protected boolean isElementDisplayed(String elementName, String elementTextReplace) {
 		wait.waitForElementToBeVisible(element(elementName, elementTextReplace));
 		boolean result = element(elementName, elementTextReplace).isDisplayed();
 		highlight(element(elementName, elementTextReplace));
-		assertTrue(result, "Assertion Failed: element '" + elementName
-				+ "with text " + elementTextReplace + "' is not displayed.");
-		logMessage("Assertion Passed: element " + elementName + " with text "
-				+ elementTextReplace + " is displayed.");
+		assertTrue(result, "Assertion Failed: element '" + elementName + "with text " + elementTextReplace
+				+ "' is not displayed.");
+		logMessage("Assertion Passed: element " + elementName + " with text " + elementTextReplace + " is displayed.");
 		return result;
 	}
 
 	protected boolean isElementDisplayed(String elementName, String elementTextReplace, String elementTextReplace2) {
-		wait.waitForElementToBeVisible(element(elementName, elementTextReplace,elementTextReplace2));
-		boolean result = element(elementName, elementTextReplace,elementTextReplace2).isDisplayed();
-		highlight(element(elementName, elementTextReplace,elementTextReplace2));
-		assertTrue(result, "Assertion Failed: element '" + elementName
-				+ "with text " + elementTextReplace + "' is not displayed.");
-		logMessage("Assertion Passed: element " + elementName + " with text "
-				+ elementTextReplace + " is displayed.");
+		wait.waitForElementToBeVisible(element(elementName, elementTextReplace, elementTextReplace2));
+		boolean result = element(elementName, elementTextReplace, elementTextReplace2).isDisplayed();
+		highlight(element(elementName, elementTextReplace, elementTextReplace2));
+		assertTrue(result, "Assertion Failed: element '" + elementName + "with text " + elementTextReplace
+				+ "' is not displayed.");
+		logMessage("Assertion Passed: element " + elementName + " with text " + elementTextReplace + " is displayed.");
 		return result;
 	}
 
 	protected void verifyElementText(String elementName, String expectedText) {
 		wait.waitForElementToBeVisible(element(elementName));
 		assertEquals(element(elementName).getText(), expectedText,
-				"Assertion Failed: element '" + elementName
-				+ "' Text is not as expected: ");
-		logMessage("Assertion Passed: element " + elementName
-				+ " is visible and Text is " + expectedText);
+				"Assertion Failed: element '" + elementName + "' Text is not as expected: ");
+		logMessage("Assertion Passed: element " + elementName + " is visible and Text is " + expectedText);
+	}
+
+	protected void clickUsingJavascript(WebElement element) {
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
+		logMessage("Clicked on element " + element + " using Javascript");
 	}
 
 	protected boolean isElementDisplayed(String elementName) {
 		wait.waitForElementToBeVisible(element(elementName));
 		boolean result = element(elementName).isDisplayed();
 		highlight(element(elementName));
-		assertTrue(result, "Assertion Failed: element '" + elementName
-				+ "' is not displayed.");
-		logMessage("Assertion Passed: element " + elementName
-				+ " is displayed.");
+		assertTrue(result, "Assertion Failed: element '" + elementName + "' is not displayed.");
+		logMessage("Assertion Passed: element " + elementName + " is displayed.");
 		return result;
 	}
 
@@ -253,11 +295,11 @@ public class GetPage extends BaseUi {
 		}
 		driver.switchTo().defaultContent();
 		driver.switchTo().window(window);
-		logMessage("User is on the "+windowName);
+		logMessage("User is on the " + windowName);
 	}
 
 	public void changeWindow(int i) {
-		//String currentWindow = driver.getWindowHandle();
+		// String currentWindow = driver.getWindowHandle();
 		Set<String> windows = driver.getWindowHandles();
 		if (i > 0) {
 			for (int j = 0; j < 5; j++) {
@@ -275,20 +317,17 @@ public class GetPage extends BaseUi {
 		}
 		String wins[] = windows.toArray(new String[windows.size()]);
 		String browser = getProperty("./Config.properties", "browser");
-		if (browser.equalsIgnoreCase("ie")
-				|| browser.equalsIgnoreCase("internetexplorer")
+		if (browser.equalsIgnoreCase("ie") || browser.equalsIgnoreCase("internetexplorer")
 				|| browser.equalsIgnoreCase("internet explorer")) {
 			driver.switchTo().window(wins[i]);
 			driver.switchTo().window(wins[i]);
 			driver.switchTo().window(wins[i]);
-			System.out.println("Switch window three time for browser :"
-					+ browser);
-			
+			System.out.println("Switch window three time for browser :" + browser);
+
 		} else
 			driver.switchTo().window(wins[i]);
 
-		while (driver.getTitle().equalsIgnoreCase("about:blank")
-				|| driver.getTitle().equalsIgnoreCase("")) {
+		while (driver.getTitle().equalsIgnoreCase("about:blank") || driver.getTitle().equalsIgnoreCase("")) {
 			wait.hardWait(2);
 		}
 		driver.manage().window().maximize();

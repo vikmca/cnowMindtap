@@ -20,7 +20,8 @@ txt_assignmentFinishedHeading		css					div.pageContentBody>h2
 btn_submitForGrading				css					button[title='Submit for Grading']
 txt_warningPopup					xpath				//span[contains(text(),'WARNING')]
 txt_questionList					xpath				(//ol[contains(@class,'itemSelectorContainer')]/li/span[@class='text'])[#{text}]
-option_answer						css					input[type="radio"][value='#{text}']
+option_answer						xpath				//input[@type="radio"]/../../span[contains(text(),'#{text}')]/../span[@class='ci-choice-indicator']
+option_wrongAnswer					xpath				(//input[@type="radio"]/../../span[not(contains(text(),'#{text}')) and contains(@class,'ci-choice-descr')]/preceding-sibling::span/input[@type="radio"])[1]
 rejoinder_correctAnswer				css					.ci-correct
 rejoinder_incorrectAnswer			css					.ci-incorrect
 choice_options						css					input[type="radio"]
@@ -32,3 +33,5 @@ popup_incorrectAnswer				xpath				//div[@id='popup' and contains(@class,'ci-inco
 btn_grades							css					a[title="Grades"]	
 btn_assignments						css					a[title="Assignments"]
 options_choice						css					.ci-choice
+arrow_collapseFeedback				xpath				//div[@class='ci-feedback-category-body']/preceding-sibling::div[@class='ci-feedback-category-title']/div
+lnk_nextPage						xpath				//a[text()='Next']

@@ -59,6 +59,10 @@ public class SeleniumWait{
 		return (WebElement) wait.until(ExpectedConditions.visibilityOf(element));
 	}
 
+	public WebElement waitForElementToBePresent(By locator) {
+		return (WebElement) wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+	}
+	
 	public void waitForFrameToBeAvailableAndSwitchToIt(By locator) {
 		wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(locator));
 	}

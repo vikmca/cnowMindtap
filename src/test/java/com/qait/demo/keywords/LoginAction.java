@@ -2,7 +2,7 @@ package com.qait.demo.keywords;
 
 import org.openqa.selenium.WebDriver;
 
-public class LoginAction extends ComanAction {
+public class LoginAction extends CommonAction {
 
 	public LoginAction(WebDriver driver) {
 		super(driver, "CnowLoginPage");

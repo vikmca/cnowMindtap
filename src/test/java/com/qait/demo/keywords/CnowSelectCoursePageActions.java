@@ -4,11 +4,14 @@ import java.io.IOException;
 
 import org.apache.http.client.ClientProtocolException;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
+
+import com.gargoylesoftware.htmlunit.javascript.host.dom.XPathResult;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.qait.automation.getpageobjects.GetPage;
@@ -32,10 +35,12 @@ public class CnowSelectCoursePageActions extends GetPage {
 	 */
 	public void selectCourse(String course_name) {
 		courseName = course_name;
-		scrollIntoView(element("lnkCourseName", course_name));
-		isElementDisplayed("lnkCourseName", course_name);
-
-		element("lnkCourseName", course_name).click();
+		while (isElementNotDisplayedInDom("lnkCourseName", course_name)) {
+			click(element("lnk_nextPage"));
+		}
+		// scrollIntoView(element("lnkCourseName", course_name));
+		// isElementDisplayed("lnkCourseName", course_name);
+		click(element("lnkCourseName", course_name));
 		logMessage("Course " + course_name + " selected !!");
 	}
 
@@ -80,7 +85,6 @@ public class CnowSelectCoursePageActions extends GetPage {
 	 * Method to verify action of same chapter in Assignment Table
 	 */
 	public void verifyActionOfChapter(String action) {
-		System.out.println("###########" + action);
 		// isElementDisplayed("input_takeResumeRetakeBtn","2", chapterNum);
 		actionForChapter = action;
 	}
@@ -90,19 +94,7 @@ public class CnowSelectCoursePageActions extends GetPage {
 	 */
 	public void performActionOnChapter() {
 		System.out.println("*********************" + chapterNum + "****************" + actionForChapter);
-		// element("input_takeResumeRetakeBtn", chapterNum,
-		// actionForChapter).click();
-		// Actions ob = new Actions(driver);
-		// ob.click(element("input_takeResumeRetakeBtn", chapterNum,
-		// actionForChapter));
-		// Action action = ob.build();
-		// action.perform();
-		element("input_takeResumeRetakeBtn", chapterNum, actionForChapter).click();
-		// driver.findElement(By
-		// .xpath("//div[@class='stalker' and
-		// not(contains(@style,'hi'))]//table[@id='overviewTable']//td[text()='Demo']/..//input[@value='Retake']"))
-		// .click();
-		// executeJavascript(script);
+		clickUsingJavascript(element("input_takeResumeRetakeBtn", chapterNum, actionForChapter));
 		logMessage(actionForChapter + " clicked");
 	}
 
@@ -234,7 +226,7 @@ public class CnowSelectCoursePageActions extends GetPage {
 	 * @throws IOException
 	 * @throws ClientProtocolException
 	 */
-	public void attemptQuestionsCorrectly() throws ClientProtocolException, IOException {
+	public void attemptQuestionsCorrectly(String proCode) throws ClientProtocolException, IOException {
 		int i = 1;
 
 		// Traversing all the questions in Question panel
@@ -242,12 +234,13 @@ public class CnowSelectCoursePageActions extends GetPage {
 			// Counter for running test for specific number of questions
 			// starting from first
 			if (i <= elements("itemCount").size()) {
-				wait.hardWait(1);
 				click(element);// select a question
 				System.out.print("question name :: ");
+				String questionName = element("txt_questionList", Integer.toString(i)).getText();
 				System.out.println(element("txt_questionList", Integer.toString(i)).getText());
-				if (element("options_choice").isDisplayed()) {
+				try {
 					// obtaining seed value
+					element("options_choice").isDisplayed();
 					String seedValue = element("seed_choice").getAttribute("options");
 					System.out.println("*************" + seedValue);
 					JsonObject jobj = new Gson().fromJson(seedValue, JsonObject.class);
@@ -255,11 +248,11 @@ public class CnowSelectCoursePageActions extends GetPage {
 					System.out.println(result);
 
 					// Fetching answer from CXP
-					String answer = ObtainAnswerHTMLFromCXP.getAnswerHTMLFromCXP(
-							"<item src='" + courseName.toLowerCase() + "/"
+					String answer = ObtainAnswerHTMLFromCXP.getAnswerHTMLFromCXP(questionName,
+							"<item src='" + proCode.toLowerCase() + "/"
 									+ element("txt_questionList", Integer.toString(i)).getText().trim() + "' />",
 							result);
-					element("option_answer", answer).click();
+					click(element("option_answer", answer));
 					click(element("btn_checkMyWork"));
 					wait.hardWait(1);
 
@@ -279,7 +272,13 @@ public class CnowSelectCoursePageActions extends GetPage {
 					logMessage("Grade indicator verified to be correct");
 					logMessage("Feedback of Question verified as Correct");
 					i++;
-				} else {
+				} catch (Exception e) {
+					System.out.println(e);
+					i++;
+					continue;
+				} catch (AssertionError e1) {
+					System.out.println(e1);
+					i++;
 					continue;
 				}
 			}
@@ -293,7 +292,7 @@ public class CnowSelectCoursePageActions extends GetPage {
 	 * @throws IOException
 	 * @throws ClientProtocolException
 	 */
-	public void attemptQuestionsIncorrectly() throws ClientProtocolException, IOException {
+	public void attemptQuestionsIncorrectly(String proCode) throws ClientProtocolException, IOException {
 		int i = 1;
 
 		// Traversing all the questions in Question panel
@@ -304,9 +303,11 @@ public class CnowSelectCoursePageActions extends GetPage {
 				wait.hardWait(1);
 				click(element);// select a question
 				System.out.print("question name :: ");
+				String questionName = element("txt_questionList", Integer.toString(i)).getText();
 				System.out.println(element("txt_questionList", Integer.toString(i)).getText());
-				if (!isElementNotDisplayedInDom("options_choice")) {
+				try {
 					// obtaining seed value
+					element("options_choice").isDisplayed();
 					String seedValue = element("seed_choice").getAttribute("options");
 					System.out.println("*************" + seedValue);
 					JsonObject jobj = new Gson().fromJson(seedValue, JsonObject.class);
@@ -314,20 +315,15 @@ public class CnowSelectCoursePageActions extends GetPage {
 					System.out.println(result);
 
 					// Fetching answer from CXP
-					String answer = ObtainAnswerHTMLFromCXP.getAnswerHTMLFromCXP(
-							"<item src='" + courseName.toLowerCase() + "/"
+					String answer = ObtainAnswerHTMLFromCXP.getAnswerHTMLFromCXP(questionName,
+							"<item src='" + proCode.toLowerCase() + "/"
 									+ element("txt_questionList", Integer.toString(i)).getText().trim() + "' />",
 							seedValue);
 					int noOfOptions = elements("choice_options").size();
 					System.out.println("No of options :: " + noOfOptions);
 
 					// Wrong answer evaluation
-					int wrongAnswer = (Integer.parseInt(answer)) + 1;
-					if (wrongAnswer > noOfOptions) {
-						wrongAnswer = 1;
-					}
-					System.out.println("Wrong answer :: " + wrongAnswer);
-					element("option_answer", Integer.toString(wrongAnswer)).click();
+					element("option_wrongAnswer", answer).click();
 					click(element("btn_checkMyWork"));
 					wait.hardWait(1);
 
@@ -354,7 +350,13 @@ public class CnowSelectCoursePageActions extends GetPage {
 					logMessage("Grade indicator verified to be incorrect");
 					logMessage("Feedback of Question verified as Incorrect");
 					i++;
-				} else {
+				} catch (Exception e) {
+					System.out.println(e);
+					i++;
+					continue;
+				} catch (AssertionError e1) {
+					System.out.println(e1);
+					i++;
 					continue;
 				}
 			}
